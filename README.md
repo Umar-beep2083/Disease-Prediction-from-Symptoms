@@ -1,81 +1,78 @@
-# Disease Prediction from Symptoms
+# 🏥 Disease Predictor from Symptoms
 
-This project explores the use of machine learning algorithms to predict diseases from symptoms. 
+![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python) 
+![Flask](https://img.shields.io/badge/Flask-Web_App-green?style=for-the-badge&logo=flask) 
+![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-orange?style=for-the-badge&logo=scikit-learn)
 
-### Algorithms Explored
+A machine learning web application that predicts potential diseases based on user-selected symptoms. Built with **scikit-learn** and a **Flask** web interface.
 
-The following algorithms have been explored in code:
+> ⚠️ **Medical Disclaimer:** This tool is for educational purposes only. Always consult a qualified doctor for any medical concerns.
 
-1. Naive Bayes
-2. Decision Tree
-3. Random Forest
-4. Gradient Boosting
+---
 
-# Dataset
+## ✨ Features & Enhancements
 
-### Source-1
+This project significantly extends baseline models with the following key features:
 
-The dataset for this problem used with the `main.py` script is downloaded from here:
+- **Robus Evaluation:** Replaced single train/test split with **Stratified 5-Fold Cross-Validation** to ensure unbiased accuracy estimates across the full dataset.
+- **GridSearchCV Hyperparameter Tuning:** 
+  - **Random Forest:** Automatically tunes `n_estimators`, `max_depth`, `min_samples_split`.
+  - **SVM:** Automatically tunes `C`, `kernel`, `gamma`.
+- **Classifier Comparison:** Head-to-head comparison between tuned Random Forest and SVM. Both achieve perfect accuracy on this dataset. Random Forest is saved as the default model.
+- **Interactive Web Interface (Flask):**
+  - Searchable multi-select symptom chips (132 supported symptoms).
+  - Real-time top-3 disease predictions.
+  - Visual confidence score bars for each prediction.
+  - Dark-themed, responsive, production-grade UI.
+- **Data Preprocessing:** Automatic handling of missing NaN values (`fillna=0`).
 
-```
-https://www.kaggle.com/kaushil268/disease-prediction-using-machine-learning
-```
+---
 
-This dataset has 133 total columns, 132 of them being symptoms experienced by patiend and last column in prognosis for the same.
+## 🚀 Quick Start (How to Run)
 
-### Source-2
-The dataset for this problem used with the Jupyter notebook is downloaded from here: 
-```
-https://impact.dbmi.columbia.edu/~friedma/Projects/DiseaseSymptomKB/index.html
-```
-
-This dataset has 3 columns:
-```
-Disease  | Count of Disease Occurrence | Symptom
-```
-
-You can either copy paste the whole table from here to an excel sheet or scrape it out using Beautifulsoup.
-
-# Directory Structure
-
-```
-|_ dataset/
-         |_ training_data.csv
-         |_ test_data.csv
-
-|_ saved_model/
-         |_ [ pre-trained models ]
-
-|_ main.py [ code for laoding kaggle dataset, training & saving the model]
-
-|_ notebook/
-         |_ dataset/
-                  |_ raw_data.xlsx [Columbia dataset for notebook]
-         |_ Disease-Prediction-from-Symptoms-checkpoint.ipynb [ IPython Notebook for loading Columbia dataset, training model and Inference ]
+**1. Install dependencies**
+```bash
+pip install flask scikit-learn pandas numpy
 ```
 
-# Usage
-
-Please make sure to install all dependencies before running the demo, using the following:
-
-```
-pip install -r requirements.txt
+**2. Train the model**  
+Runs GridSearchCV to tune hyperparameters and saves the best model natively:
+```bash
+python train.py
 ```
 
-## Interactive Demo
-
-For running an interactive demo or sharing it with others, please run `demo.py` using Jupyter Notebook or Jupyter Lab.
-
-```
-jupyter notebook demo.ipynb
+**3. Launch the web interface**
+```bash
+python app.py
 ```
 
-## Standalone Demo
+**4. Access the app**  
+Open your browser and navigate to: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-For running the inference on test set or on custom inputs, you can also use the `infr.py` file as follows:
+---
 
+## 📁 Project Structure
+
+```text
+Disease-Prediction-from-Symptoms/
+├── dataset/
+│   ├── training_data.csv        # Source dataset
+│   └── test_data.csv            # Testing subsets
+├── model/
+│   ├── best_model.pkl           # Auto-saved best model
+│   ├── label_encoder.pkl        # Encoded target labels
+│   └── feature_columns.pkl      # Saved symptom features
+├── templates/
+│   └── index.html               # Flask frontend template
+├── app.py                       # Web app entrypoint
+├── train.py                     # Cross-validation & tuning script
+├── main.py                      # Original base file (preserved)
+├── infer.py                     # Original base file (preserved)
+└── requirements.txt             # Python dependencies
 ```
-python infer.py
-```
 
-**NOTE:** ***This project is for demo purposes only. For any symptoms/disease, please refer to a Doctor.***
+---
+
+## 🙏 Credits
+
+Based on the original repository: [anujdutt9/Disease-Prediction-from-Symptoms](https://github.com/anujdutt9/Disease-Prediction-from-Symptoms)
